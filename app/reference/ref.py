@@ -42,7 +42,7 @@ class Reference:
     # the default number of options in each question
     default_option_num = 5
     # the default package name of the reference questionnaire image
-    _default_ref_image_package_name = 'app.resources'
+    _default_ref_image_package_name = 'app.resources.ref'
     # the default resource file name of the reference questionnaire image
     _default_ref_image_resource_name = 'reference.jpg'
 
@@ -119,7 +119,7 @@ class _ReferencePointsOfSignificanceLoader:
     """Loads the reference point of significance related resource and auto generates their masks"""
 
     # the default package name of the reference points of significance excel
-    _default_ref_p_of_sig_excel_package_name = 'app.resources.sig'
+    _default_ref_p_of_sig_excel_package_name = 'app.resources.ref.sig'
     # the default resource file name of the reference points of significance excel
     _default_ref_p_of_sig_excel_resource_name = 'ref_pos_sig.xlsx'
 
@@ -218,7 +218,7 @@ class _ReferenceBoxLoader:
     """Loads the reference box related resource"""
 
     # the default package name of the reference box excel
-    _default_ref_box_excel_package_name = 'app.resources.box'
+    _default_ref_box_excel_package_name = 'app.resources.ref.box'
     # the default resource file name of the reference box excel
     _default_ref_box_excel_resource_name = 'ref_box.xlsx'
 

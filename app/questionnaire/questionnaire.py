@@ -36,7 +36,7 @@ class Questionnaire:
     # after that the option image will be saved to this questionnaire object's corresponding option
     _default_length_after_resizing = 40
 
-    def __init__(self, image_path: Path, ref: Reference, bc: BoxClassifier):
+    def __init__(self, image_path: Path):
         """ Initialize a questionnaire and automatically extract data from its image
 
         Parameters
@@ -50,11 +50,11 @@ class Questionnaire:
         """
         # saves the reference to the image path, reference and box classifier
         self._path = image_path
-        self._ref = ref
-        self._bc = bc
+        self._ref = Reference()
+        self._bc = BoxClassifier()
         # initialize the distortion with the image path and the reference and
         # label the image to be labelled with reference points of significance
-        self._distortion = Distortion(image_path, ref)
+        self._distortion = Distortion(image_path, self._ref)
         # initialize the questions and its options
         self._question_num = Reference.default_question_num
         self._option_num = Reference.default_option_num
