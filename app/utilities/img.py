@@ -219,8 +219,11 @@ class Image:
         self._content = self._content.convert(mode='RGB')
         image_data = np.array(self._content)
         for middle_point in center_pixels:
-            x = middle_point.x
-            y = middle_point.y
+            # forcing x and y into integer although they were integers
+            # this seems to be an error on the cv2 library side.
+            # see https://github.com/opencv/opencv/issues/15465
+            x = int(middle_point.x)
+            y = int(middle_point.y)
             image_data = cv2.rectangle(image_data, (x - radius, y - radius), (x + radius, y + radius), _rgb_red,
                                        _default_box_line_width)
         return Image(ImageLib.fromarray(image_data))
@@ -254,8 +257,11 @@ class Image:
         self._content = self._content.convert(mode='RGB')
         image_data = np.array(self._content)
         for middle_point in points:
-            x = middle_point.x
-            y = middle_point.y
+            # forcing x and y into integer although they were integers
+            # this seems to be an error on the cv2 library side.
+            # see https://github.com/opencv/opencv/issues/15465
+            x = int(middle_point.x)
+            y = int(middle_point.y)
             for j in range(y - _default_dot_radius, y + _default_dot_radius + 1):
                 for i in range(x - _default_dot_radius, x + _default_dot_radius + 1):
                     image_data[j][i] = _rgb_red
