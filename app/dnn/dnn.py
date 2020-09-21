@@ -130,7 +130,7 @@ class _BoxClassifierDNN:
             if random_number == 1:
                 input_array, y = train_batch.get_empty_boxes()
 
-            # - - - Do a feedforward
+            # - - - stochastic gradient descent
             for i in range(train_batch.batch_number):
                 z_l1 = np.dot(self.weight_array, input_array) + self.biases_array
                 a_l1 = sigmoid(z_l1)         # a_l1 is a matrix (2,1)
