@@ -26,3 +26,4 @@ To test the functionality of the project, you should do the followings:
 6. Open the CMD.exe Prompt and change directory to the top-level directory of the cloned Repo
 7. Run the following command: python -m app
 8. Follow the instructions in the  CMD.exe Prompt
+9. The generated output are labelled questionnaire images and an excel file with the aggregated data
