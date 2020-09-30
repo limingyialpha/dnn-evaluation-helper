@@ -17,9 +17,9 @@ empty_vec = np.array([[1], [0]])
 
 """The following two folder names should be set before starting the training"""
 # the default folder name where the crossed boxes locate
-_default_training_data_crossed_box_folder_name = r'E:\work\Project\Python_Abschluss_projekt_09.2020\Neuronale-Netze-als-Evaluationshelfer-local\app\resources\dnn\training\box_crossed'
+_default_training_data_crossed_box_folder_name = ''
 # the default folder name where the empty boxes locate
-_default_training_data_empty_box_folder_name = r'E:\work\Project\Python_Abschluss_projekt_09.2020\Neuronale-Netze-als-Evaluationshelfer-local\app\resources\dnn\training\box_empty'
+_default_training_data_empty_box_folder_name = ''
 
 
 class TrainingBatchDistributor:
