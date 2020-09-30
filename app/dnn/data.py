@@ -36,7 +36,7 @@ class TrainingBatchDistributor:
     # the proportion of the data used to train the dnn and the data used to verify the correctness
     # For example 0.75 means 75% of the data will be used to train the dnn
     # the rest 25% will be used to verify its correctness
-    _training_proportion: int = 0.75
+    _training_proportion: float = 0.75
 
     def __init__(self):
         """Initializes the distributor"""
@@ -73,7 +73,7 @@ class TrainingBatchDistributor:
             Iterator to iterate through the training data
         """
         if len(self._training_data_paths) < batch_size:
-            raise NoMoreTrainingData("Training data are not sufficient to form a new traning batch!")
+            raise NoMoreTrainingData("Training data are not sufficient to form a new training batch!")
         else:
             sets = [TrainingData(self._training_data_paths.pop()) for i in range(0, batch_size)]
             return sets.__iter__()

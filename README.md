@@ -8,6 +8,8 @@ The formal description can be found in "guide/Neuronale Netze als Evaluationshel
 
 
 ## User guide
+The Project only runs on Windows10
+(Due to unsolved bugs in "pickle" package responsible for deep neural network serialization and deserialization)
 To test the functionality of the project, you should do the followings:
 1. Download Git: https://git-scm.com/downloads
 2. Open Command Prompt and clone the Repository with: git clone https://github.com/limingyialpha/dnn-evaluation-helper.git

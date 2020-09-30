@@ -128,8 +128,6 @@ class _BoxClassifierDNN:
 
 
 class DNNSelector:
-
-
     """This class natural selects the best _BoxClassifierDNN
 
     A part of the data is used to train the dnn
@@ -139,58 +137,56 @@ class DNNSelector:
     In the end, only the best dnn will be saved using pickle module
     """
 
+    def __init__(self, batch_size: int, learning_rate: float, epoch: int, generation_threshold: int,
+                 correctness_threshold: float):
+        """Initializes the selector with params
 
-def __init__(self, batch_size: int, learning_rate: float, epoch: int, generation_threshold: int,
-             correctness_threshold: float):
-    """Initializes the selector with params
+        Parameters
+        ----------
+        batch_size:
+            the batch size
+        learning_rate:
+            the learning rate
+        epoch:
+            the epoch
+        generation_threshold:
+            the threshold for the generation
+            the iteration stops after this generation
+        correctness_threshold:
+            the threshold for the correctness
+            the iteration stops earlier if the
+            correctness of the dnn has reached this threshold
+        """
+        self._batch_size = batch_size
+        self._learning_rate = learning_rate
+        self._epoch = epoch
+        self._generation_threshold = generation_threshold
+        self._correctness_threshold = correctness_threshold
+        self._current_best_dnn: _BoxClassifierDNN = None
+        self._current_best_generation = 0
+        self._current_highest_correctness_rate: float = 0.5
 
-    Parameters
-    ----------
-    batch_size:
-        the batch size
-    learning_rate:
-        the learning rate
-    epoch:
-        the epoch
-    generation_threshold:
-        the threshold for the generation
-        the iteration stops after this generation
-    correctness_threshold:
-        the threshold for the correctness
-        the iteration stops earlier if the
-        correctness of the dnn has reached this threshold
-    """
-    self._batch_size = batch_size
-    self._learning_rate = learning_rate
-    self._epoch = epoch
-    self._generation_threshold = generation_threshold
-    self._correctness_threshold = correctness_threshold
-    self._current_best_dnn: _BoxClassifierDNN = None
-    self._current_best_generation = 0
-    self._current_highest_correctness_rate: float = 0.5
-
-
-def natural_select(self):
-    """Natural selects thebest dnn"""
-    t_start = time.time()
-    print(
-        f"The natural selection starts: batch size:{self._batch_size}, learning rate:{self._learning_rate}, epoch:{self._epoch},generation threshold:{self._generation_threshold}, correctness threshold: {self._correctness_threshold}")
-    current_generation = 1
-    while self._current_highest_correctness_rate <= self._correctness_threshold and current_generation <= self._generation_threshold:
-        dnn = _BoxClassifierDNN()
-        dnn.train(self._batch_size, self._learning_rate, self._epoch)
-        new_correctness_rate = dnn.get_correctness()
-        if new_correctness_rate > self._current_highest_correctness_rate:
-            self._current_best_dnn = dnn
-            self._current_best_generation = current_generation
-            self._current_highest_correctness_rate = new_correctness_rate
-            message = "New generation"
-        else:
-            message = "Dead generation"
+    def natural_select(self):
+        """Natural selects thebest dnn"""
+        t_start = time.time()
         print(
-            message + f": {current_generation},correctness: {new_correctness_rate:.4f} , time spent:{time.time() - t_start:.2f}")
-        current_generation += 1
-    print(
-        f"Natural Selection ended: the best generation: {self._current_best_generation} with correctness rate:{self._current_highest_correctness_rate}")
-    self._current_best_dnn.save(self._batch_size, self._learning_rate, self._epoch, self._current_best_generation,
-                                self._current_highest_correctness_rate)
+            f"The natural selection starts: batch size:{self._batch_size}, learning rate:{self._learning_rate}, epoch:{self._epoch},generation threshold:{self._generation_threshold}, correctness threshold: {self._correctness_threshold}")
+        current_generation = 1
+        while self._current_highest_correctness_rate <= self._correctness_threshold and current_generation <= self._generation_threshold:
+            dnn = _BoxClassifierDNN()
+            dnn.train(self._batch_size, self._learning_rate, self._epoch)
+            new_correctness_rate = dnn.get_correctness()
+            if new_correctness_rate > self._current_highest_correctness_rate:
+                self._current_best_dnn = dnn
+                self._current_best_generation = current_generation
+                self._current_highest_correctness_rate = new_correctness_rate
+                message = "New generation"
+            else:
+                message = "Dead generation"
+            print(
+                message + f": {current_generation},correctness: {new_correctness_rate:.4f} , time spent:{time.time() - t_start:.2f}")
+            current_generation += 1
+        print(
+            f"Natural Selection ended: the best generation: {self._current_best_generation} with correctness rate:{self._current_highest_correctness_rate}")
+        self._current_best_dnn.save(self._batch_size, self._learning_rate, self._epoch, self._current_best_generation,
+                                    self._current_highest_correctness_rate)
