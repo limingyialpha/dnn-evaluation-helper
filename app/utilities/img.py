@@ -7,9 +7,9 @@ from importlib.resources import path
 from pathlib import Path
 from typing import List
 
-import cv2
 import numpy as np
 from PIL import Image as ImageLib
+from PIL import ImageDraw
 
 from app.utilities.pixel import Pixel
 
@@ -217,16 +217,13 @@ class Image:
             a new labelled image
         """
         self._content = self._content.convert(mode='RGB')
-        image_data = np.array(self._content)
+        draw = ImageDraw.Draw(self._content)
         for middle_point in center_pixels:
-            # forcing x and y into integer although they were integers
-            # this seems to be an error on the cv2 library side.
-            # see https://github.com/opencv/opencv/issues/15465
-            x = int(middle_point.x)
-            y = int(middle_point.y)
-            image_data = cv2.rectangle(image_data, (x - radius, y - radius), (x + radius, y + radius), _rgb_red,
-                                       _default_box_line_width)
-        return Image(ImageLib.fromarray(image_data))
+            x = middle_point.x
+            y = middle_point.y
+            draw.rectangle([x - radius, y - radius, x + radius, y + radius], fill=None, outline=_rgb_red,
+                           width=_default_box_line_width)
+        return Image(self._content)
 
     def label_points(self, points: List[Pixel], radius: int) -> Image:
         """Labels points of images
@@ -255,16 +252,13 @@ class Image:
             a new labelled image
         """
         self._content = self._content.convert(mode='RGB')
-        image_data = np.array(self._content)
+        draw = ImageDraw.Draw(self._content)
         for middle_point in points:
-            # forcing x and y into integer although they were integers
-            # this seems to be an error on the cv2 library side.
-            # see https://github.com/opencv/opencv/issues/15465
-            x = int(middle_point.x)
-            y = int(middle_point.y)
+            x = middle_point.x
+            y = middle_point.y
             for j in range(y - _default_dot_radius, y + _default_dot_radius + 1):
                 for i in range(x - _default_dot_radius, x + _default_dot_radius + 1):
-                    image_data[j][i] = _rgb_red
-            image_data = cv2.rectangle(image_data, (x - radius, y - radius), (x + radius, y + radius), _rgb_red,
-                                       _default_box_line_width)
-        return Image(ImageLib.fromarray(image_data))
+                    draw.point((i, j), fill=_rgb_red)
+            draw.rectangle([x - radius, y - radius, x + radius, y + radius], fill=None, outline=_rgb_red,
+                           width=_default_box_line_width)
+        return Image(self._content)

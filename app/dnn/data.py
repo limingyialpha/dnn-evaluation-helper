@@ -17,9 +17,9 @@ empty_vec = np.array([[1], [0]])
 
 """The following two folder names should be set before starting the training"""
 # the default folder name where the crossed boxes locate
-_default_training_data_crossed_box_folder_name = r'E:\work\Project\Python_Abschluss_projekt_09.2020\Neuronale-Netze-als-Evaluationshelfer-local\app\resources\dnn\training\box_crossed'
+_default_training_data_crossed_box_folder_name = ''
 # the default folder name where the empty boxes locate
-_default_training_data_empty_box_folder_name = r'E:\work\Project\Python_Abschluss_projekt_09.2020\Neuronale-Netze-als-Evaluationshelfer-local\app\resources\dnn\training\box_empty'
+_default_training_data_empty_box_folder_name = ''
 
 
 class TrainingBatchDistributor:
@@ -36,7 +36,7 @@ class TrainingBatchDistributor:
     # the proportion of the data used to train the dnn and the data used to verify the correctness
     # For example 0.75 means 75% of the data will be used to train the dnn
     # the rest 25% will be used to verify its correctness
-    _training_proportion: int = 0.75
+    _training_proportion: float = 0.75
 
     def __init__(self):
         """Initializes the distributor"""
@@ -73,7 +73,7 @@ class TrainingBatchDistributor:
             Iterator to iterate through the training data
         """
         if len(self._training_data_paths) < batch_size:
-            raise NoMoreTrainingData("Training data are not sufficient to form a new traning batch!")
+            raise NoMoreTrainingData("Training data are not sufficient to form a new training batch!")
         else:
             sets = [TrainingData(self._training_data_paths.pop()) for i in range(0, batch_size)]
             return sets.__iter__()
