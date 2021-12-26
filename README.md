@@ -3,7 +3,7 @@ This project is the final project of "Einführung in Python" Module in SS2020 pr
 
 ## Project description
 "Deep Neural Network Evaluation helper" automatically generates statistics from scanned questionnaires with handwritten crosses.
-
+It is interesting bcause it is actually not deep.
 The formal description can be found in "guide/Neuronale Netze als Evaluationshelfer.pdf".
 
 
